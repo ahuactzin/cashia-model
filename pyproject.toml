@@ -9,7 +9,7 @@ description = "Model package for Cashia"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
-  { name = "Juan Manuel Ahuactzin" }
+    { name = "Juan Manuel Ahuactzin", email = "juan.manuel.ahuactzin@gmail.com" }
 ]
 dependencies = [
   "cashia-core==1.1.0",
