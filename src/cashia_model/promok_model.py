@@ -1,5 +1,6 @@
 import joblib
 import pickle
+from mlp.model_generator_config import get_mlp_resource_key
 
 class ModelToTest:
     def __init__(self, name, parameters, is_probabilistic = True, model_conf =""):
@@ -42,9 +43,38 @@ class ModelToTest:
         filename = self.name+".sav"
         joblib.dump(self, filename)
 
-    def save_with_pickle(self):
-        filename = self.name+"_"+self.model_conf+".sav"
-        pickle.dump(self, open("./models/"+filename, 'wb'))
+
+    # def save_with_pickle(self, path="./models"):
+    #     """Guarda el modelo serializado en el directorio indicado.
+
+    #     Args:
+    #         path (str | Path, optional): Directorio donde se guardará
+    #             el modelo. Por defecto "./models".
+    #     """
+    #     filename = self.name + "_" + self.model_conf + ".sav"
+
+    #     models_dir = Path(path)
+    #     models_dir.mkdir(parents=True, exist_ok=True)
+
+    #     output_path = models_dir / filename
+
+    #     with open(output_path, "wb") as file:
+    #         pickle.dump(self, file)
+
+    def save_with_pickle(self, storage):
+        """Guarda el modelo serializado en el almacenamiento configurado.
+
+        Args:
+            storage: Instancia de LocalStorage o S3Storage.
+        """
+        filename = f"{self.name}_{self.model_conf}.sav"
+
+        output_key = (
+            f"{get_mlp_resource_key('models_dir')}{filename}"
+        )
+
+        storage.write_bytes(output_key, pickle.dumps(self))
+
 
     def __str__(self):
         features = "Model name: "+self.name+"\n"
