@@ -151,10 +151,10 @@ Models are typically stored as **serialized files** such as:
 
 Examples:
 
-    Random_Forest_NV_Agt.sav
-    Random_Forest_NV_CC.sav
-    Random_Forest_RNV_Agt.sav
-    Random_Forest_RNV_CC.sav
+    M01_NV_Agt.sav
+    M01_NV_CC.sav
+    M01_RNV_Agt.sav
+    M01_RNV_CC.sav
 
 These models are loaded dynamically using utilities in the package.
 
@@ -192,7 +192,7 @@ Example:
 ``` python
 import pickle
 
-with open("Random_Forest_NV_Agt.sav", "rb") as f:
+with open("M01_NV_Agt.sav", "rb") as f:
     model = pickle.load(f)
 ```
 
