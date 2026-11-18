@@ -5,48 +5,47 @@ management utilities** used in the Cashia ecosystem.
 
 This package is responsible for:
 
--   loading trained credit models
--   managing model containers
--   providing prediction interfaces
--   organizing model resources
+- loading trained credit models
+- managing model containers
+- providing prediction interfaces
+- organizing model resources
 
 It is used primarily by:
 
--   **CCE (Cashia Credit Engine)** -- for internal credit engine
+- **cashia-credit-engine** -- for internal credit engine
     computations
--   **cashia-api** -- to expose predictions through REST endpoints
+- **cashia-api** -- to expose predictions through REST endpoints
 
 ------------------------------------------------------------------------
 
-# 1. Requirements
+## 1. Requirements
 
 Before installing `cashia-model`, ensure the following are available:
 
--   Python **3.11**
--   pip
--   Access to the repositories:
+- Python **3.13**
+- pip
+- Access to the repositories:
 
-```{=html}
-<!-- -->
+``` text
+cashia-core
+cashia-model
 ```
-    cashia-core
-    cashia-model
 
 Recommended tools:
 
--   **Anaconda / Miniconda**
--   **Visual Studio Code**
+- **Anaconda / Miniconda**
+- **Visual Studio Code**
 
 ------------------------------------------------------------------------
 
-# 2. Environment Setup
+## 2. Environment Setup
 
 ## Option A --- Using Conda (recommended)
 
 Create the environment:
 
 ``` bash
-conda create -n cashia_env python=3.11
+conda create -n cashia_env python=3.13
 ```
 
 Activate it:
@@ -81,19 +80,21 @@ source cashia_env/bin/activate
 
 ------------------------------------------------------------------------
 
-# 3. Installation
+## 3. Installation
 
 Navigate to the root directory containing the Cashia repositories.
 
 Example:
 
-    cashia
-    │
-    ├── cashia-core
-    ├── cashia-model
-    ├── cce
-    ├── cashia-api
-    └── mlp
+```text
+cashia
+│
+├── cashia-core
+├── cashia-model
+├── cashia-credit-engine
+├── cashia-api
+└── cashia-mlp
+```
 
 Install dependencies in editable mode:
 
@@ -106,61 +107,61 @@ Editable mode is recommended during development.
 
 ------------------------------------------------------------------------
 
-# 4. Project Structure
+## 4. Project Structure
 
 Typical structure of the project:
 
-    cashia-model
-    │   pyproject.toml
-    │   README.md
-    │
-    └───src
-        └───cashia_model
-            │   pm_model_rebuilder.py
-            │   model_container.py
-            │   prediction_manager.py
-            │
-            ├── models
-            ├── utils
-            └── resources
+```text
+cashia-model
+│   pyproject.toml
+│   README.md
+│
+└───src
+    └───cashia_model
+        │   pm_model_rebuilder.py
+        │   model_container.py
+        │   prediction_manager.py
+        │
+        ├── models
+        ├── utils
+        └── resources
+```
 
 ### Key modules
 
-  --------------------------------------------------------------------------
-  Module                    Description
-  ------------------------- ------------------------------------------------
-  `pm_model_rebuilder.py`   Reconstructs model objects from serialized files
-
-  `model_container.py`      Container class for managing multiple models
-
-  `prediction_manager.py`   Handles prediction workflows
-
-  `models/`                 Serialized ML models
-
-  `resources/`              configuration resources related to models
-  --------------------------------------------------------------------------
+| Module | Description |
+| --- | --- |
+| `pm_model_rebuilder.py` | Reconstructs model objects from serialized files |
+| `model_container.py` | Container class for managing multiple models |
+| `prediction_manager.py` | Handles prediction workflows |
+| `models/` | Serialized ML models |
+| `resources/` | Configuration resources related to models |
 
 ------------------------------------------------------------------------
 
-# 5. Model Files
+## 5. Model Files
 
 Models are typically stored as **serialized files** such as:
 
-    .sav
-    .pkl
+```text
+.sav
+.pkl
+```
 
 Examples:
 
-    M01_NV_Agt.sav
-    M01_NV_CC.sav
-    M01_RNV_Agt.sav
-    M01_RNV_CC.sav
+```text
+M01_NV_Agt.sav
+M01_NV_CC.sav
+M01_RNV_Agt.sav
+M01_RNV_CC.sav
+```
 
 These models are loaded dynamically using utilities in the package.
 
 ------------------------------------------------------------------------
 
-# 6. Model Container
+## 6. Model Container
 
 A central component of this package is the **ModelsContainer**, which
 loads and manages all available models.
@@ -183,7 +184,7 @@ efficiently.
 
 ------------------------------------------------------------------------
 
-# 7. Loading Serialized Models
+## 7. Loading Serialized Models
 
 Serialized models are typically loaded using Python's `pickle` module.
 
@@ -201,7 +202,7 @@ to standardize loading.
 
 ------------------------------------------------------------------------
 
-# 8. Interaction with cashia-core
+## 8. Interaction with cashia-core
 
 Model resources are accessed using utilities provided by
 **cashia-core**.
@@ -220,14 +221,14 @@ model_bytes = storage.read_bytes(model_path)
 
 This allows models to be loaded from:
 
--   local storage
--   cloud storage (e.g., S3)
+- local storage
+- cloud storage (e.g., S3)
 
 without modifying model code.
 
 ------------------------------------------------------------------------
 
-# 9. Example Prediction
+## 9. Example Prediction
 
 Example simplified prediction flow:
 
@@ -246,12 +247,12 @@ print(result)
 
 This interface is typically used by:
 
--   the **CCE engine**
--   the **Cashia API**
+- the **Cashia Credit Engine**
+- the **Cashia API**
 
 ------------------------------------------------------------------------
 
-# 10. Development Notes
+## 10. Development Notes
 
 ## Editable install
 
@@ -275,7 +276,7 @@ pip install -e cashia-model --upgrade
 
 ------------------------------------------------------------------------
 
-# 11. Troubleshooting
+## 11. Troubleshooting
 
 ### Pickle compatibility errors
 
@@ -283,9 +284,11 @@ Serialized models depend on specific library versions.
 
 Typical compatible versions may include:
 
-    pandas==1.5.3
-    numpy==1.26.0
-    scikit-learn==1.1.3
+```bash
+pandas==1.5.3
+numpy==1.26.0
+scikit-learn==1.1.3
+```
 
 If loading fails, verify that the correct versions are installed.
 
@@ -295,37 +298,37 @@ If loading fails, verify that the correct versions are installed.
 
 If a model cannot be loaded, verify that:
 
--   the model file exists
--   the resource path is correctly configured
--   storage backend settings are correct
+- the model file exists
+- the resource path is correctly configured
+- storage backend settings are correct
 
 ------------------------------------------------------------------------
 
-# 12. Role in the Cashia Architecture
+## 12. Role in the Cashia Architecture
 
 Within the Cashia architecture:
 
-  Component      Responsibility
-  -------------- ---------------------------
-  cashia-core    shared utilities
-  cashia-model   machine learning models
-  cce            credit computation engine
-  cashia-api     REST API interface
+| Component | Responsibility |
+| ----------- | ---------------- |
+| cashia-core | shared utilities |
+| cashia-model | machine learning models |
+| cashia-credit-engine | credit computation engine |
+| cashia-api | REST API interface |
 
 `cashia-model` acts as the **model layer** between the core
 infrastructure and the credit engine.
 
 ------------------------------------------------------------------------
 
-# 13. Future Improvements
+## 13. Future Improvements
 
 Possible future enhancements include:
 
--   automatic model reloading
+- automatic model reloading
 
 ------------------------------------------------------------------------
 
-# Author
+## Author
 
 Juan Manuel Ahuactzin\
 Cashia Project
