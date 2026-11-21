@@ -1,6 +1,6 @@
 import joblib
 import pickle
-from cashia_mlp.config import get_mlp_resource_key
+from cashia_core.common_tools.configuration.resource_keys import get_resource_path
 
 class TrainModel:
     def __init__(self, name, parameters, is_probabilistic = True, model_conf =""):
@@ -64,7 +64,7 @@ class TrainModel:
         filename = f"{prefix_name}_{self.model_conf}.sav"
 
         output_key = (
-            f"{get_mlp_resource_key('models_dir')}{filename}"
+            f"{get_resource_path('models')}{filename}"
         )
 
         storage.write_bytes(output_key, pickle.dumps(self))
